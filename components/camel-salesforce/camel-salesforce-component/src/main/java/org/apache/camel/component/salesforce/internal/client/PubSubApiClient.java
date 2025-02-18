@@ -346,6 +346,11 @@ public class PubSubApiClient extends ServiceSupport {
                             LOG.debug("logged in {}", consumer.getTopic());
                         }
                         case PUBSUB_ERROR_CORRUPTED_REPLAY_ID -> {
+                            // replayId should be null until first onNext() is called.
+                            // In case initialReplayId is invalid onNext() will never be called.
+                            if (replayId == null && initialReplayPreset == ReplayPreset.CUSTOM) {
+                                throw new RuntimeException("initialReplayId is corrupt.", e);
+                            }
                             LOG.error("replay id: " + replayId
                                       + " is corrupt. Trying to recover by resubscribing with LATEST replay preset");
                             replayId = null;
