@@ -210,7 +210,7 @@ public class SmbOperations implements SmbFileOperations {
     public boolean buildDirectory(String directory, boolean absolute) throws GenericFileOperationFailedException {
         connectIfNecessary();
         SmbFiles files = new SmbFiles();
-
+//test
         try {
             files.mkdirs(share, normalize(directory));
         } catch (SMBRuntimeException smbre) {
